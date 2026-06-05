@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ИИ в строительстве — структура курса (прототип)</title>
+<title>ИИ в строительстве — 30 шагов (прототип)</title>
 <meta name="robots" content="noindex">
 <style>
   :root{
     --bg:#ffffff; --card:#faf8f5; --card2:#f3efe9; --ink:#1a1814; --muted:#6f7280;
     --line:#e9e4dc; --brand:#e2231a; --blue:#237cf9; --green:#1f9d57; --yellow:#f5b500; --purple:#9b5de5;
-    --r:16px; --rs:10px;
-    --font:'Proxima Nova','Helvetica Neue','Segoe UI',Arial,system-ui,sans-serif;
+    --r:16px; --rs:10px; --font:'Proxima Nova','Helvetica Neue','Segoe UI',Arial,system-ui,sans-serif;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -19,41 +18,38 @@
   .topbar{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:26px;flex-wrap:wrap}
   .logo{font-weight:800;font-size:15px}.logo .red{color:var(--brand)}.logo .sep{color:var(--muted);font-weight:600}
   .school{font-size:13px;color:var(--muted);font-weight:600}.topbar .sp{flex:1}
-  .pill{display:inline-block;background:#efe7fb;color:var(--purple);border:1px solid #ddc9f6;border-radius:999px;
-    padding:5px 12px;font-size:12px;font-weight:700}
+  .pill{display:inline-block;background:#efe7fb;color:var(--purple);border:1px solid #ddc9f6;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700}
   .kicker{font-size:12.5px;letter-spacing:.04em;color:var(--muted);font-weight:700;margin:0 0 8px;text-transform:uppercase}
   .rule{display:inline-block;width:46px;height:4px;border-radius:3px;vertical-align:middle}
-  h1{font-size:34px;line-height:1.1;margin:6px 0 10px;font-weight:800;letter-spacing:-.01em}
-  .lead{color:var(--muted);font-size:16px;max-width:720px}
+  h1{font-size:34px;line-height:1.1;margin:6px 0 6px;font-weight:800;letter-spacing:-.01em}
+  .slogan{font-size:16px;font-weight:700;color:var(--ink);margin:0 0 10px}
+  .lead{color:var(--muted);font-size:15.5px;max-width:730px}
   h2{font-size:22px;margin:40px 0 14px;font-weight:800;letter-spacing:-.01em}
   p{margin:0 0 12px}
-  /* ladder */
   .ladder{display:grid;gap:10px}
-  .rung{display:grid;grid-template-columns:120px 1fr;gap:16px;background:var(--card);border:1px solid var(--line);
-    border-radius:12px;padding:14px 16px;align-items:center}
-  .rung .lvl{font-weight:800;font-size:14px}
-  .rung .lvl small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;margin-top:2px}
-  .rung .up{font-size:14px}.rung .up b{font-weight:700}
-  .rung .up small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .rung{display:grid;grid-template-columns:150px 1fr;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;align-items:center}
+  .rung .lvl{font-weight:800;font-size:14px}.rung .lvl small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;margin-top:2px}
+  .rung .up{font-size:14px}.rung .up b{font-weight:700}.rung .up small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
   .rung .bar{width:46px;height:4px;border-radius:3px;margin-top:6px}
-  /* module cards */
+  .weeks{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .wk{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
+  .wk .wt{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .wk h3{font-size:18px;margin:3px 0 6px;font-weight:800}
+  .wk p{font-size:13.5px;color:var(--muted);margin:0}
   .mods{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   .mod{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:6px;min-height:150px}
   .mod .mh{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
   .mod .mt{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
-  .mod h3{font-size:18px;margin:2px 0 2px;font-weight:800}
+  .mod h3{font-size:17px;margin:2px 0 2px;font-weight:800}
   .mod p{font-size:13.5px;color:var(--muted);margin:0}
   .mod .links{margin-top:auto;padding-top:12px;display:flex;gap:10px;flex-wrap:wrap}
-  .lnk{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;border-radius:9px;padding:9px 14px;
-    background:var(--blue);color:#fff}
-  .lnk:hover{filter:brightness(.95)}
-  .lnk.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);cursor:default}
+  .lnk{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;border-radius:9px;padding:9px 14px;background:var(--blue);color:#fff}
+  .lnk:hover{filter:brightness(.95)}.lnk.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);cursor:default}
   .tag{font-size:10.5px;font-weight:800;border-radius:6px;padding:2px 7px;letter-spacing:.03em}
-  .tag.ready{background:var(--green);color:#fff}
-  .tag.soon{background:var(--card2);color:var(--muted)}
+  .tag.ready{background:var(--green);color:#fff}.tag.soon{background:var(--card2);color:var(--muted)}
   .note{font-size:13px;color:#7a5b16;background:#fdf6e3;border:1px solid #f3e3b3;border-radius:12px;padding:13px 15px;margin-top:18px}
   .foot{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
-  @media(max-width:640px){.mods{grid-template-columns:1fr}.rung{grid-template-columns:90px 1fr}}
+  @media(max-width:640px){.weeks,.mods{grid-template-columns:1fr}.rung{grid-template-columns:110px 1fr}}
 </style>
 </head>
 <body>
@@ -68,67 +64,78 @@
 
   <div class="kicker">Онлайн-курс <span class="rule" style="background:var(--brand)"></span></div>
   <h1>ИИ в строительстве</h1>
-  <p class="lead">Практико-ориентированный курс для строительных специалистов: меняем способ мышления, а не учим кнопкам одного сервиса. Каждый урок — короткий, с тренажёром и применением на своей задаче. Ниже — структура курса и работающие прототипы уроков.</p>
+  <p class="slogan">30 шагов: рабочий ИИ-инструмент для строителя</p>
+  <p class="lead">Практический курс для занятых специалистов: осваивайте в своём темпе, применяйте с первой недели. Меняем способ мышления, а не учим кнопкам одного сервиса. Короткие шаги с тренажёрами, примеры под вашу роль, ставка на инструменты, доступные в России.</p>
 
   <h2>Как устроен курс: ассистент, который растёт с вами</h2>
-  <p class="lead" style="margin-bottom:18px">Через весь курс проходит один симулятор — «ваш ИИ-ассистент». Он начинается как голый чат и в каждом модуле получает новый апгрейд. Так абстрактная теория превращается в видимую прокачку инструмента.</p>
+  <p class="lead" style="margin-bottom:18px">Через весь курс проходит один симулятор — «ваш ИИ-ассистент». Он стартует как голый чат и в каждую неделю получает апгрейд. Так теория превращается в видимую прокачку рабочего инструмента.</p>
   <div class="ladder">
-    <div class="rung"><div class="lvl">Уровень 0<small>Модуль 0</small><div class="bar" style="background:var(--brand)"></div></div><div class="up"><b>Голый чат</b><small>отвечает «в среднем по рынку», не знает вас, не помнит, не открывает файлы</small></div></div>
-    <div class="rung"><div class="lvl">Уровень 1<small>Модуль 1</small><div class="bar" style="background:var(--blue)"></div></div><div class="up"><b>Роль и контекст</b><small>системный промпт + ваши данные → отвечает в нужной роли и по делу</small></div></div>
-    <div class="rung"><div class="lvl">Уровень 2<small>Модуль 2</small><div class="bar" style="background:var(--yellow)"></div></div><div class="up"><b>Библиотека промптов</b><small>сохранённые шаблоны и few-shot — повтор удачных запросов в один клик</small></div></div>
-    <div class="rung"><div class="lvl">Уровень 3<small>Модуль 3</small><div class="bar" style="background:var(--green)"></div></div><div class="up"><b>Знания: ваши документы (RAG)</b><small>отвечает по вашим файлам со ссылкой на источник</small></div></div>
-    <div class="rung"><div class="lvl">Уровень 4<small>Модуль 4</small><div class="bar" style="background:var(--purple)"></div></div><div class="up"><b>Инструменты</b><small>файлы, таблицы, почта, поиск — ИИ не только говорит, но и делает</small></div></div>
-    <div class="rung"><div class="lvl">Уровень 5<small>Модуль 5</small><div class="bar" style="background:var(--ink)"></div></div><div class="up"><b>Агенты и сценарии</b><small>многошаговые задачи по сценарию, с проверкой человеком</small></div></div>
+    <div class="rung"><div class="lvl">Старт<small>Шаг 0</small><div class="bar" style="background:var(--brand)"></div></div><div class="up"><b>Голый чат</b><small>выбираем и регистрируем инструмент, учимся безопасности данных</small></div></div>
+    <div class="rung"><div class="lvl">Неделя 1<small>шаги 1–7</small><div class="bar" style="background:var(--blue)"></div></div><div class="up"><b>Роль и контекст</b><small>первый осмысленный запрос, проверка ответов</small></div></div>
+    <div class="rung"><div class="lvl">Неделя 2<small>шаги 8–14</small><div class="bar" style="background:var(--yellow)"></div></div><div class="up"><b>Библиотека промптов</b><small>рабочие документы и личные шаблоны под роль</small></div></div>
+    <div class="rung"><div class="lvl">Неделя 3<small>шаги 15–21</small><div class="bar" style="background:var(--green)"></div></div><div class="up"><b>Знания, данные и медиа</b><small>таблицы, OCR, голос→текст, совещания, фото, видео</small></div></div>
+    <div class="rung"><div class="lvl">Неделя 4<small>шаги 22–28</small><div class="bar" style="background:var(--purple)"></div></div><div class="up"><b>Инструменты и рабочий набор</b><small>знания по своим документам, устойчивая практика</small></div></div>
+    <div class="rung"><div class="lvl">Горизонт<small>финал + далее</small><div class="bar" style="background:var(--ink)"></div></div><div class="up"><b>Агенты и процессы</b><small>следующий уровень: многошаговые сценарии с проверкой человеком</small></div></div>
   </div>
 
-  <h2>Модули и прототипы</h2>
+  <h2>Маршрут 30 шагов</h2>
+  <div class="weeks">
+    <div class="wk"><div class="wt">Старт</div><h3>Подготовь инструмент</h3><p>Выбор и регистрация GigaChat/YandexGPT, первый запрос, что можно и нельзя загружать.</p></div>
+    <div class="wk"><div class="wt">Неделя 1 · Новичок</div><h3>Основы и первый результат</h3><p>Как ИИ думает, где врёт и как проверять, безопасность, первый осмысленный запрос.</p></div>
+    <div class="wk"><div class="wt">Неделя 2 · Уверенный</div><h3>Документы в работе</h3><p>Промптинг, рабочие письма и акты, длинные документы, презентации, личные шаблоны.</p></div>
+    <div class="wk"><div class="wt">Неделя 3 · Уверенный+</div><h3>Данные и медиа на стройке</h3><p>Таблицы, OCR-сканы, голос→текст, автопротоколы, фото и видео с объекта.</p></div>
+    <div class="wk"><div class="wt">Неделя 4 · Продвинутый</div><h3>Знания и устойчивая практика</h3><p>Вопрос-ответ по своим документам, нормативка с проверкой, рабочий ИИ-набор.</p></div>
+    <div class="wk"><div class="wt">Финал</div><h3>Защита и «Паспорт навыков»</h3><p>Сквозной кейс по роли, проверка куратором, удостоверение о повышении квалификации.</p></div>
+  </div>
+
+  <h2>Прототипы уроков</h2>
   <div class="mods">
 
     <div class="mod">
-      <div class="mh"><span class="mt">Модуль 0</span><span class="tag ready">Прототип готов</span></div>
+      <div class="mh"><span class="mt">Старт · Модуль 0</span><span class="tag ready">Готово</span></div>
       <h3>Знакомство с ИИ</h3>
       <p>Как ИИ «думает», где он врёт и что ему нельзя показывать. Три урока с тренажёрами.</p>
-      <div class="links"><a class="lnk" href="module-0.html">Открыть модуль →</a></div>
+      <div class="links"><a class="lnk" href="module-0.html">Открыть →</a></div>
     </div>
 
     <div class="mod">
-      <div class="mh"><span class="mt">Модуль 1</span><span class="tag ready">Урок 1.1 готов</span></div>
-      <h3>Чат и контекст</h3>
-      <p>Почему ИИ «глупеет» без ваших документов. Урок 1.1 — тренажёр, практика и отправка задания на проверку.</p>
-      <div class="links"><a class="lnk" href="lesson-1.html">Открыть урок 1.1 →</a></div>
+      <div class="mh"><span class="mt">Неделя 1 · Шаг 5</span><span class="tag ready">Готово</span></div>
+      <h3>ИИ не знает вашу компанию</h3>
+      <p>Почему ИИ «глупеет» без ваших документов. Тренажёр, практика, отправка на проверку.</p>
+      <div class="links"><a class="lnk" href="lesson-1.html">Открыть →</a></div>
     </div>
 
     <div class="mod">
-      <div class="mh"><span class="mt">Модуль 2</span><span class="tag soon">В разработке</span></div>
-      <h3>Промптинг</h3>
-      <p>Пять кирпичей промпта, примеры сильнее объяснений, разбиение задач на шаги.</p>
+      <div class="mh"><span class="mt">Неделя 3 · Шаг 16</span><span class="tag ready">Готово</span></div>
+      <h3>Сравнение КП в таблицу</h3>
+      <p>Сметчик: свести коммерческие предложения в таблицу, подсветить отклонения и риски.</p>
+      <div class="links"><a class="lnk" href="lesson-kp.html">Открыть →</a></div>
+    </div>
+
+    <div class="mod">
+      <div class="mh"><span class="mt">Неделя 3 · Шаг 18</span><span class="tag ready">Готово</span></div>
+      <h3>Голос → запись в ОЖР</h3>
+      <p>Прораб: надиктовал смену — ИИ привёл к форме общего журнала работ за пару минут.</p>
+      <div class="links"><a class="lnk" href="lesson-ozhr.html">Открыть →</a></div>
+    </div>
+
+    <div class="mod">
+      <div class="mh"><span class="mt">Неделя 2 · документы</span><span class="tag soon">В разработке</span></div>
+      <h3>Рабочие документы под роль</h3>
+      <p>Письма, ответы на предписания и замечания, инструкции, презентации и отчёты.</p>
       <div class="links"><span class="lnk ghost">Скоро</span></div>
     </div>
 
     <div class="mod">
-      <div class="mh"><span class="mt">Модуль 3</span><span class="tag soon">В разработке</span></div>
-      <h3>Свои документы (RAG)</h3>
-      <p>База знаний под себя: ИИ отвечает по вашим файлам со ссылкой на источник.</p>
-      <div class="links"><span class="lnk ghost">Скоро</span></div>
-    </div>
-
-    <div class="mod">
-      <div class="mh"><span class="mt">Модуль 4</span><span class="tag soon">В разработке</span></div>
-      <h3>Инструменты</h3>
-      <p>Анализ таблиц и файлов, почта и календарь, выбор инструмента под задачу.</p>
-      <div class="links"><span class="lnk ghost">Скоро</span></div>
-    </div>
-
-    <div class="mod">
-      <div class="mh"><span class="mt">Модуль 5</span><span class="tag soon">В разработке</span></div>
-      <h3>Агенты и процессы</h3>
-      <p>Ассистент против агента, проектирование первого сценария, риски и границы.</p>
+      <div class="mh"><span class="mt">Неделя 4 · знания</span><span class="tag soon">В разработке</span></div>
+      <h3>Вопрос-ответ по своим документам</h3>
+      <p>Загрузил файл — спросил со ссылкой. Нормативка с обязательной проверкой.</p>
       <div class="links"><span class="lnk ghost">Скоро</span></div>
     </div>
 
   </div>
 
-  <div class="note">Это рабочий прототип для согласования подхода и оформления. Уроки интерактивны — открываются и проходятся. Примеры компаний и проектов вымышлены. Страница не индексируется поисковиками.</div>
+  <div class="note">Рабочий прототип для согласования подхода и оформления. Уроки интерактивны — открываются и проходятся. Примеры компаний и проектов вымышлены. Страница не индексируется поисковиками.</div>
 
   <div class="foot">Прототип курса «ИИ в строительстве» · оформление под Высшую инженерную школу (Актион Строительство) · демо-сборка на GitHub Pages</div>
 
