@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ в строительстве — структура курса (прототип)</title>
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --bg:#ffffff; --card:#faf8f5; --card2:#f3efe9; --ink:#1a1814; --muted:#6f7280;
+    --line:#e9e4dc; --brand:#e2231a; --blue:#237cf9; --green:#1f9d57; --yellow:#f5b500; --purple:#9b5de5;
+    --r:16px; --rs:10px;
+    --font:'Proxima Nova','Helvetica Neue','Segoe UI',Arial,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 18px 80px}
+  a{color:var(--blue);text-decoration:none}
+  .topbar{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:26px;flex-wrap:wrap}
+  .logo{font-weight:800;font-size:15px}.logo .red{color:var(--brand)}.logo .sep{color:var(--muted);font-weight:600}
+  .school{font-size:13px;color:var(--muted);font-weight:600}.topbar .sp{flex:1}
+  .pill{display:inline-block;background:#efe7fb;color:var(--purple);border:1px solid #ddc9f6;border-radius:999px;
+    padding:5px 12px;font-size:12px;font-weight:700}
+  .kicker{font-size:12.5px;letter-spacing:.04em;color:var(--muted);font-weight:700;margin:0 0 8px;text-transform:uppercase}
+  .rule{display:inline-block;width:46px;height:4px;border-radius:3px;vertical-align:middle}
+  h1{font-size:34px;line-height:1.1;margin:6px 0 10px;font-weight:800;letter-spacing:-.01em}
+  .lead{color:var(--muted);font-size:16px;max-width:720px}
+  h2{font-size:22px;margin:40px 0 14px;font-weight:800;letter-spacing:-.01em}
+  p{margin:0 0 12px}
+  /* ladder */
+  .ladder{display:grid;gap:10px}
+  .rung{display:grid;grid-template-columns:120px 1fr;gap:16px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px;align-items:center}
+  .rung .lvl{font-weight:800;font-size:14px}
+  .rung .lvl small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;margin-top:2px}
+  .rung .up{font-size:14px}.rung .up b{font-weight:700}
+  .rung .up small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .rung .bar{width:46px;height:4px;border-radius:3px;margin-top:6px}
+  /* module cards */
+  .mods{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .mod{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:6px;min-height:150px}
+  .mod .mh{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .mod .mt{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .mod h3{font-size:18px;margin:2px 0 2px;font-weight:800}
+  .mod p{font-size:13.5px;color:var(--muted);margin:0}
+  .mod .links{margin-top:auto;padding-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+  .lnk{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;border-radius:9px;padding:9px 14px;
+    background:var(--blue);color:#fff}
+  .lnk:hover{filter:brightness(.95)}
+  .lnk.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);cursor:default}
+  .tag{font-size:10.5px;font-weight:800;border-radius:6px;padding:2px 7px;letter-spacing:.03em}
+  .tag.ready{background:var(--green);color:#fff}
+  .tag.soon{background:var(--card2);color:var(--muted)}
+  .note{font-size:13px;color:#7a5b16;background:#fdf6e3;border:1px solid #f3e3b3;border-radius:12px;padding:13px 15px;margin-top:18px}
+  .foot{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+  @media(max-width:640px){.mods{grid-template-columns:1fr}.rung{grid-template-columns:90px 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <span class="logo"><span class="red">АКТИОН</span> <span class="sep">Строительство</span></span>
+    <span class="school">· Высшая инженерная школа</span>
+    <span class="sp"></span>
+    <span class="pill">Прототип · демо</span>
+  </div>
+
+  <div class="kicker">Онлайн-курс <span class="rule" style="background:var(--brand)"></span></div>
+  <h1>ИИ в строительстве</h1>
+  <p class="lead">Практико-ориентированный курс для строительных специалистов: меняем способ мышления, а не учим кнопкам одного сервиса. Каждый урок — короткий, с тренажёром и применением на своей задаче. Ниже — структура курса и работающие прототипы уроков.</p>
+
+  <h2>Как устроен курс: ассистент, который растёт с вами</h2>
+  <p class="lead" style="margin-bottom:18px">Через весь курс проходит один симулятор — «ваш ИИ-ассистент». Он начинается как голый чат и в каждом модуле получает новый апгрейд. Так абстрактная теория превращается в видимую прокачку инструмента.</p>
+  <div class="ladder">
+    <div class="rung"><div class="lvl">Уровень 0<small>Модуль 0</small><div class="bar" style="background:var(--brand)"></div></div><div class="up"><b>Голый чат</b><small>отвечает «в среднем по рынку», не знает вас, не помнит, не открывает файлы</small></div></div>
+    <div class="rung"><div class="lvl">Уровень 1<small>Модуль 1</small><div class="bar" style="background:var(--blue)"></div></div><div class="up"><b>Роль и контекст</b><small>системный промпт + ваши данные → отвечает в нужной роли и по делу</small></div></div>
+    <div class="rung"><div class="lvl">Уровень 2<small>Модуль 2</small><div class="bar" style="background:var(--yellow)"></div></div><div class="up"><b>Библиотека промптов</b><small>сохранённые шаблоны и few-shot — повтор удачных запросов в один клик</small></div></div>
+    <div class="rung"><div class="lvl">Уровень 3<small>Модуль 3</small><div class="bar" style="background:var(--green)"></div></div><div class="up"><b>Знания: ваши документы (RAG)</b><small>отвечает по вашим файлам со ссылкой на источник</small></div></div>
+    <div class="rung"><div class="lvl">Уровень 4<small>Модуль 4</small><div class="bar" style="background:var(--purple)"></div></div><div class="up"><b>Инструменты</b><small>файлы, таблицы, почта, поиск — ИИ не только говорит, но и делает</small></div></div>
+    <div class="rung"><div class="lvl">Уровень 5<small>Модуль 5</small><div class="bar" style="background:var(--ink)"></div></div><div class="up"><b>Агенты и сценарии</b><small>многошаговые задачи по сценарию, с проверкой человеком</small></div></div>
+  </div>
+
+  <h2>Модули и прототипы</h2>
+  <div class="mods">
+
+    <div class="mod">
+      <div class="mh"><span class="mt">Модуль 0</span><span class="tag ready">Прототип готов</span></div>
+      <h3>Знакомство с ИИ</h3>
+      <p>Как ИИ «думает», где он врёт и что ему нельзя показывать. Три урока с тренажёрами.</p>
+      <div class="links"><a class="lnk" href="module-0.html">Открыть модуль →</a></div>
+    </div>
+
+    <div class="mod">
+      <div class="mh"><span class="mt">Модуль 1</span><span class="tag ready">Урок 1.1 готов</span></div>
+      <h3>Чат и контекст</h3>
+      <p>Почему ИИ «глупеет» без ваших документов. Урок 1.1 — тренажёр, практика и отправка задания на проверку.</p>
+      <div class="links"><a class="lnk" href="lesson-1.html">Открыть урок 1.1 →</a></div>
+    </div>
+
+    <div class="mod">
+      <div class="mh"><span class="mt">Модуль 2</span><span class="tag soon">В разработке</span></div>
+      <h3>Промптинг</h3>
+      <p>Пять кирпичей промпта, примеры сильнее объяснений, разбиение задач на шаги.</p>
+      <div class="links"><span class="lnk ghost">Скоро</span></div>
+    </div>
+
+    <div class="mod">
+      <div class="mh"><span class="mt">Модуль 3</span><span class="tag soon">В разработке</span></div>
+      <h3>Свои документы (RAG)</h3>
+      <p>База знаний под себя: ИИ отвечает по вашим файлам со ссылкой на источник.</p>
+      <div class="links"><span class="lnk ghost">Скоро</span></div>
+    </div>
+
+    <div class="mod">
+      <div class="mh"><span class="mt">Модуль 4</span><span class="tag soon">В разработке</span></div>
+      <h3>Инструменты</h3>
+      <p>Анализ таблиц и файлов, почта и календарь, выбор инструмента под задачу.</p>
+      <div class="links"><span class="lnk ghost">Скоро</span></div>
+    </div>
+
+    <div class="mod">
+      <div class="mh"><span class="mt">Модуль 5</span><span class="tag soon">В разработке</span></div>
+      <h3>Агенты и процессы</h3>
+      <p>Ассистент против агента, проектирование первого сценария, риски и границы.</p>
+      <div class="links"><span class="lnk ghost">Скоро</span></div>
+    </div>
+
+  </div>
+
+  <div class="note">Это рабочий прототип для согласования подхода и оформления. Уроки интерактивны — открываются и проходятся. Примеры компаний и проектов вымышлены. Страница не индексируется поисковиками.</div>
+
+  <div class="foot">Прототип курса «ИИ в строительстве» · оформление под Высшую инженерную школу (Актион Строительство) · демо-сборка на GitHub Pages</div>
+
+</div>
+</body>
+</html>
