@@ -221,6 +221,7 @@
         <p class="stp">4 · Большое</p>
         <h2>48 позиций, 3 поставщика — где PDF начинает врать</h2>
         <p>Реальная закупка — спецификация на десятки позиций. Способ передачи данных резко влияет на результат. Сначала — что ломается в PDF.</p>
+        <div class="why"><b>На входе:</b> спецификация-ТЗ (48 позиций, без цен) и <b>три отдельных КП</b> от поставщиков со своими ценами. <b>На выходе:</b> одна сравнительная таблица 48×3 с подсветкой отклонений и разных единиц. <b>Зачем:</b> свести три многостраничных КП вручную — полдня и риск пропустить ловушку; ИИ делает это за минуту, но на PDF — с ошибками.</div>
         <h3>Как ИИ «видит» таблицу из PDF</h3>
         <div class="illu">
           <svg width="340" height="190" viewBox="0 0 340 190" xmlns="http://www.w3.org/2000/svg" aria-label="Столбцы PDF рассыпаются">
@@ -253,7 +254,7 @@
           <div class="body" id="chatBig">
             <span class="sys">⚙️ Роль: инженер-сметчик · 48 позиций · 3 поставщика</span>
             <div class="bub u">Сведи спецификацию и 3 КП в сравнительную таблицу, подсветь отклонения от ТЗ и разные единицы. Итоги я проверю сам.
-              <span class="att" onclick="previewDoc('spec')">📎 спецификация · 👁</span></div>
+              <span class="att" onclick="previewDoc('spectz')">📎 ТЗ-спецификация · 👁</span> <span class="att" onclick="previewDoc('kpA')">📎 КП А</span> <span class="att" onclick="previewDoc('kpB')">📎 КП Б</span> <span class="att" onclick="previewDoc('kpV')">📎 КП В</span></div>
           </div>
           <div class="ctrls"><div class="seg" id="modeSeg">
             <button data-m="text" class="on">📋 Текст / CSV</button>
@@ -261,10 +262,16 @@
             <button class="btn sm" id="runBig">▶ Отправить</button>
             <button class="btn ghost sm" id="showTraps" style="display:none">⚠ Показать ловушки</button></div>
         </div>
+        <p class="muted" style="font-size:13px;margin:10px 0 4px"><b>Входные документы</b> (то, что отправляем ИИ):</p>
         <div class="dl">
-          <button class="prevbtn" onclick="previewDoc('spec')">👁 Спецификация (бланк)</button>
-          <button onclick="xlsxSpec()">📊 Скачать XLSX</button>
-          <button onclick="dl('Спецификация_48поз.csv', DATA.bigCsv,'text/csv')">📄 CSV</button>
+          <button class="prevbtn" onclick="previewDoc('spectz')">👁 ТЗ-спецификация</button>
+          <button class="prevbtn" onclick="previewDoc('kpA')">👁 КП А</button>
+          <button class="prevbtn" onclick="previewDoc('kpB')">👁 КП Б</button>
+          <button class="prevbtn" onclick="previewDoc('kpV')">👁 КП В</button>
+        </div>
+        <p class="muted" style="font-size:13px;margin:12px 0 4px"><b>Результат</b>, который должен собрать ИИ (эталон):</p>
+        <div class="dl">
+          <button class="prevbtn" onclick="previewDoc('spec')">👁 Эталон — сравнительная таблица (XLSX)</button>
         </div>
         <div class="note red" id="trapsBox" style="display:none"></div>
       </section>
@@ -489,7 +496,11 @@ const DOCS={
     <tr><td class="c">1</td><td>Кирпич КР-р М125 F50, 250×120×65, ГОСТ 530-2012</td><td class="c">шт</td><td class="r">50 000</td><td class="r">14,67</td><td class="r">3,23</td><td class="r">17,90</td><td class="r">895 000,00</td></tr></table>
     <div class="dterms"><b>Условия:</b> доставка включена (с разгрузкой); оплата — <b>100 % постоплата 30 банковских дней</b>; срок поставки — 10 дней; гарантия — 24 мес.; документы: паспорт + декларация + протоколы испытаний. Срок действия КП — 30 дней.</div>
     <div class="dsign"><div class="sig">Менеджер <span class="ln"></span> / Петрова Е.С. /</div>${stamp('ООО «РегионСтройТорг» • ИНН 7708996532 • г. Москва')}</div></div>`},
-  spec:{title:'Сводная спецификация с ценами поставщиков', file:'Спецификация_48поз', kind:'xlsx', html:null}
+  spectz:{title:'Техническое задание — спецификация (48 позиций, без цен)', file:'Спецификация_ТЗ_48поз', kind:'xlsx', html:null},
+  kpA:{title:'КП — Поставщик А (СтройМаркет)', file:'КП_А_СтройМаркет', kind:'pdf', html:null},
+  kpB:{title:'КП — Поставщик Б (ОптРесурс, УСН)', file:'КП_Б_ОптРесурс', kind:'pdf', html:null},
+  kpV:{title:'КП — Поставщик В (РегионСнаб)', file:'КП_В_РегионСнаб', kind:'pdf', html:null},
+  spec:{title:'Эталон: сравнительная таблица (что должен собрать ИИ)', file:'Эталон_сравнение', kind:'xlsx', html:null}
 };
 function buildSpecHtml(){
   const rows=DATA.bigCsv.split('\n').map(r=>r.split(';'));
@@ -518,12 +529,12 @@ function previewText(title,text){
   openPv();
 }
 function previewDoc(key){
-  const d=DOCS[key]; const html = d.html || buildSpecHtml();
+  const d=DOCS[key]; const html = getDocHtml(key);
   pvCur={kind:d.kind,file:d.file,key:key};
   document.getElementById('pvTitle').textContent=d.title;
   document.getElementById('pvBody').innerHTML=html;
   const act = d.kind==='xlsx'
-    ? '<button class="pri" onclick="xlsxSpec()">📊 Скачать XLSX</button><button onclick="dl(\''+d.file+'.csv\',DATA.bigCsv,\'text/csv\')">📄 CSV</button>'
+    ? '<button class="pri" onclick="' + (key==='spectz'?'xlsxSpecTz()':'xlsxSpec()') + '">📊 Скачать XLSX</button>'
     : '<button class="pri" onclick="pdfDoc(\''+key+'\')">📄 Скачать PDF</button>';
   document.getElementById('pvActs').innerHTML=act+'<button onclick="closePv()">✕ Закрыть</button>';
   openPv();
@@ -535,7 +546,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closePv();});
 
 /* ===== PDF из бланка ===== */
 async function pdfDoc(key){
-  const d=DOCS[key]; const html=d.html||buildSpecHtml();
+  const d=DOCS[key]; const html=getDocHtml(key);
   if(!window.jspdf || !window.html2canvas){
     // фолбэк: скачать как самостоятельный HTML-документ
     const full='<!doctype html><meta charset="utf-8"><style>'+docCss()+'</style>'+html;
@@ -666,6 +677,51 @@ renderModel('giga');
 document.getElementById('promptBox').textContent=DATA.promptCompare;
 function copyPrompt(){navigator.clipboard.writeText(DATA.promptCompare).then(()=>{document.getElementById('copyMsg').textContent='Скопировано ✓';setTimeout(()=>document.getElementById('copyMsg').textContent='',2500);}).catch(()=>{document.getElementById('copyMsg').textContent='Выделите и скопируйте вручную';});}
 document.getElementById('sendRev').addEventListener('click',()=>{const res=document.getElementById('sRes').value.trim(),email=document.getElementById('sEmail').value.trim();const m=document.getElementById('revMsg');if(!res){m.textContent='Вставьте результат';return;}const raw=`Шаг 16 (Сравнение КП) — задание на проверку\n\nРезультат:\n${res}\n\nОтвет на e-mail: ${email}`;window.location.href=`mailto:kurator@action.group?subject=${encodeURIComponent('Проверка задания · Шаг 16')}&body=${encodeURIComponent(raw)}`;m.textContent='Открываю почту…';});
+
+/* ===== ГЕНЕРАТОРЫ ВХОДНЫХ ДОКУМЕНТОВ ===== */
+function bigRows(){return DATA.bigCsv.split('\n').slice(1).map(r=>r.split(';'));}
+function getDocHtml(key){
+  if(key==='spec') return buildSpecHtml();
+  if(key==='spectz') return buildSpecTzHtml();
+  if(key==='kpA') return buildKpHtml('A');
+  if(key==='kpB') return buildKpHtml('B');
+  if(key==='kpV') return buildKpHtml('V');
+  return DOCS[key].html;
+}
+function buildSpecTzHtml(){
+  const body=bigRows().map(c=>`<tr><td class="c">${c[0]}</td><td>${c[1]}</td><td class="c">${c[2]}</td><td class="r">${c[3]}</td></tr>`).join('');
+  return `<div class="doc"><div class="dhead"><div class="dco">МКУ «УКС г. Серпухова» · Отдел закупок</div><div class="dreq">Приложение к ТЗ · запрос цен № ЗП-2026/41<br>от 10.06.2026 · НДС 22%</div></div><hr>
+  <div class="dtitle">СПЕЦИФИКАЦИЯ (приложение к техническому заданию)</div>
+  <div class="dsub">Поставка строительных материалов · 48 позиций · цены поставщики указывают в своих КП</div>
+  <table class="dt"><tr><th>№</th><th>Наименование (по ТЗ)</th><th>Ед.</th><th>Кол-во</th></tr>${body}</table>
+  <div class="dsign"><div class="sig">Начальник отдела закупок <span class="ln"></span> / Кузнецова Т.А. /</div></div></div>`;
+}
+const KPMETA={
+  A:{ci:4,co:'ООО «СтройМаркет»',req:'ИНН 7701234567 · КПП 770101001 · ОСН (НДС 22%)<br>г. Москва, ул. Складочная, 6 · тел. (495) 120-30-40',num:'№ А-318 от 11.06.2026',unit:'цена за ед., ₽ с НДС',flag:'А',terms:'Доставка включена в цену. Оплата — постоплата. Все позиции в наличии.',total:'8 481 672 ₽ с НДС',dir:'Генеральный директор',name:'Сидоров П.А.'},
+  B:{ci:5,co:'ИП «ОптРесурс»',req:'ИНН 5012345678 · ОГРНИП 318500700012345 · УСН, без НДС<br>г. Подольск, ул. Рабочая, 14 · тел. +7 906 700-10-20',num:'№ 204 от 10.06.2026',unit:'цена за ед., ₽ без НДС (УСН)',flag:'Б',terms:'Цены без НДС (УСН). Позиции 33–35 не поставляем. Оплата — 100% предоплата.',total:'6 211 868 ₽ (без НДС)',dir:'Индивидуальный предприниматель',name:'Орлов В.Н.'},
+  V:{ci:6,co:'ООО «РегионСнаб»',req:'ИНН 7709876543 · КПП 770901001 · ОСН (НДС 22%)<br>г. Москва, Варшавское ш., 42 · тел. (495) 988-77-66',num:'№ 2026/512 от 11.06.2026',unit:'цена за ед., ₽ с НДС',flag:'В',terms:'Доставка отдельной строкой +85 000 ₽. Оплата — постоплата 30 дней.',total:'10 254 851 ₽ + доставка 85 000 ₽',dir:'Менеджер по продажам',name:'Зайцева О.И.'}
+};
+function buildKpHtml(sup){
+  const m=KPMETA[sup]; const rows=bigRows();
+  const body=rows.map(c=>{
+    let price=c[m.ci]; if(!price||price==='нет позиции') price='— не поставляется';
+    const fl=(c[7]&&c[7].indexOf(m.flag+':')===0)?' <span style="color:#a30000">⚠</span>':'';
+    return `<tr><td class="c">${c[0]}</td><td>${c[1]}${fl}</td><td class="c">${c[2]}</td><td class="r">${c[3]}</td><td class="r">${price}</td></tr>`;
+  }).join('');
+  return `<div class="doc"><div class="dhead"><div class="dco">${m.co}</div><div class="dreq">${m.req}</div></div><hr>
+  <div class="dtitle">КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ ${m.num}</div>
+  <div class="dsub">Кому: МКУ «УКС г. Серпухова». На запрос № ЗП-2026/41 · ${m.unit}</div>
+  <table class="dt"><tr><th>№</th><th>Наименование</th><th>Ед.</th><th>Кол-во</th><th>Цена за ед.</th></tr>${body}</table>
+  <div class="dterms"><b>ИТОГО по предложению:</b> ${m.total}. ${m.terms}</div>
+  <div class="dsign"><div class="sig">${m.dir} <span class="ln"></span> / ${m.name} /</div>${stamp(m.co+' • '+m.req.split('·')[0])}</div></div>`;
+}
+function xlsxSpecTz(){
+  if(!window.XLSX){ dl('Спецификация_ТЗ_48поз.csv', DATA.bigCsv.split('\n').map(r=>r.split(';').slice(0,4).join(';')).join('\n'),'text/csv'); return; }
+  const aoa=[['№','Наименование (по ТЗ)','Ед.','Кол-во']].concat(bigRows().map(c=>[c[0],c[1],c[2],c[3]]));
+  const ws=XLSX.utils.aoa_to_sheet(aoa); ws['!cols']=[{wch:4},{wch:46},{wch:8},{wch:9}];
+  const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Спецификация ТЗ');
+  XLSX.writeFile(wb,'Спецификация_ТЗ_48поз.xlsx');
+}
 </script>
 </body>
 </html>
