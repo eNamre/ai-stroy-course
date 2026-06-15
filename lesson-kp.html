@@ -224,28 +224,40 @@
         <div class="why"><b>На входе:</b> спецификация-ТЗ (48 позиций, без цен) и <b>три отдельных КП</b> от поставщиков со своими ценами. <b>На выходе:</b> одна сравнительная таблица 48×3 с подсветкой отклонений и разных единиц. <b>Зачем:</b> свести три многостраничных КП вручную — полдня и риск пропустить ловушку; ИИ делает это за минуту, но на PDF — с ошибками.</div>
         <h3>Как ИИ «видит» таблицу из PDF</h3>
         <div class="illu">
-          <svg width="340" height="190" viewBox="0 0 340 190" xmlns="http://www.w3.org/2000/svg" aria-label="Столбцы PDF рассыпаются">
-            <text x="80" y="13" text-anchor="middle" font-size="11" fill="#6f7280">в файле — столбцы с данными</text>
+          <svg width="360" height="208" viewBox="0 0 360 208" xmlns="http://www.w3.org/2000/svg" aria-label="PDF теряет границы строк">
+            <text x="180" y="13" text-anchor="middle" font-size="11" fill="#6f7280">В файле напечатана таблица:</text>
             <g font-size="9.5" fill="#1a1814">
-              <rect x="14" y="20" width="92" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="18" y="31">Наименование</text>
-              <rect x="106" y="20" width="34" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="110" y="31">Кол-во</text>
-              <rect x="140" y="20" width="34" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="144" y="31">Цена</text>
-              <rect x="14" y="36" width="92" height="15" fill="#fff" stroke="#e9e4dc"/><text x="18" y="47">Подвес</text>
-              <rect x="106" y="36" width="34" height="15" fill="#fff" stroke="#e9e4dc"/><text x="110" y="47">800</text>
-              <rect x="140" y="36" width="34" height="15" fill="#fff" stroke="#e9e4dc"/><text x="144" y="47" fill="#a3201a" font-weight="700">1403</text>
-              <rect x="14" y="51" width="92" height="15" fill="#fff" stroke="#e9e4dc"/><text x="18" y="62">Штукатурка</text>
-              <rect x="106" y="51" width="34" height="15" fill="#fff" stroke="#e9e4dc"/><text x="110" y="62">380</text>
-              <rect x="140" y="51" width="34" height="15" fill="#fff" stroke="#e9e4dc"/><text x="144" y="62">793</text>
+              <rect x="67" y="18" width="130" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="72" y="29">Наименование</text>
+              <rect x="197" y="18" width="44" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="201" y="29">Кол-во</text>
+              <rect x="241" y="18" width="52" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="245" y="29">Цена, ₽</text>
+              <rect x="67" y="34" width="130" height="15" fill="#fff" stroke="#e9e4dc"/><text x="72" y="45">Подвес</text>
+              <rect x="197" y="34" width="44" height="15" fill="#fff" stroke="#e9e4dc"/><text x="201" y="45">800</text>
+              <rect x="241" y="34" width="52" height="15" fill="#fff" stroke="#e9e4dc"/><text x="245" y="45">28</text>
+              <rect x="67" y="49" width="130" height="15" fill="#fff" stroke="#e9e4dc"/><text x="72" y="60">Штукатурка</text>
+              <rect x="197" y="49" width="44" height="15" fill="#fff" stroke="#e9e4dc"/><text x="201" y="60">380</text>
+              <rect x="241" y="49" width="52" height="15" fill="#fff" stroke="#e9e4dc"/><text x="245" y="60">793</text>
+              <rect x="67" y="64" width="130" height="15" fill="#fff" stroke="#e9e4dc"/><text x="72" y="75">Кабель</text>
+              <rect x="197" y="64" width="44" height="15" fill="#fff" stroke="#e9e4dc"/><text x="201" y="75">1800</text>
+              <rect x="241" y="64" width="52" height="15" fill="#fff" stroke="#e9e4dc"/><text x="245" y="75">146</text>
             </g>
-            <text x="170" y="115" font-size="20" fill="#6f7280">↓ ИИ читает из PDF подряд, теряя столбцы</text>
-            <g font-size="10" font-family="monospace">
-              <rect x="14" y="128" width="312" height="26" fill="#fde4e2" stroke="#e2231a"/>
-              <text x="20" y="145" fill="#8f1410">Подвес 800 1403 Штукатурка 380 793 …</text>
-              <text x="20" y="172" font-size="10" fill="#a3201a">«1403» прилипает не к тому столбцу → цена за упаковку
-              <tspan x="20" dy="13">принимается как цена за штуку → строка раздувается ×50</tspan></text>
+            <text x="180" y="98" text-anchor="middle" font-size="11" fill="#6f7280">↓ ИИ распознаёт из PDF — границы строк теряются</text>
+            <text x="180" y="116" text-anchor="middle" font-size="10" fill="#a3201a" font-weight="700">как ИИ собрал: цена «съехала» на строку</text>
+            <g font-size="9.5" fill="#1a1814">
+              <rect x="67" y="124" width="130" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="72" y="135">Наименование</text>
+              <rect x="197" y="124" width="44" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="201" y="135">Кол-во</text>
+              <rect x="241" y="124" width="52" height="16" fill="#f3efe9" stroke="#1a1814"/><text x="245" y="135">Цена, ₽</text>
+              <rect x="67" y="140" width="130" height="15" fill="#fff" stroke="#e9e4dc"/><text x="72" y="151">Подвес</text>
+              <rect x="197" y="140" width="44" height="15" fill="#fff" stroke="#e9e4dc"/><text x="201" y="151">800</text>
+              <rect x="241" y="140" width="52" height="15" fill="#fde4e2" stroke="#e2231a"/><text x="245" y="151" fill="#8f1410" font-weight="700">793</text>
+              <rect x="67" y="155" width="130" height="15" fill="#fff" stroke="#e9e4dc"/><text x="72" y="166">Штукатурка</text>
+              <rect x="197" y="155" width="44" height="15" fill="#fff" stroke="#e9e4dc"/><text x="201" y="166">380</text>
+              <rect x="241" y="155" width="52" height="15" fill="#fde4e2" stroke="#e2231a"/><text x="245" y="166" fill="#8f1410" font-weight="700">146</text>
+              <rect x="67" y="170" width="130" height="15" fill="#fff" stroke="#e9e4dc"/><text x="72" y="181">Кабель</text>
+              <rect x="197" y="170" width="44" height="15" fill="#fff" stroke="#e9e4dc"/><text x="201" y="181">1800</text>
+              <rect x="241" y="170" width="52" height="15" fill="#fde4e2" stroke="#e2231a"/><text x="245" y="181" fill="#8f1410" font-weight="700">—</text>
             </g>
           </svg>
-          <div class="cap">PDF хранит страницу как «снимок». При чтении столбцы схлопываются в один поток, и число прилипает не к своей колонке.</div>
+          <div class="cap">PDF — это «снимок» страницы: при распознавании теряются границы строк и столбцов, и цена прилипает не к своему наименованию. Поэтому таблицу лучше давать ИИ текстом или Markdown, где структура задана явно.</div>
         </div>
         <h3>Чат-симулятор: PDF против текста</h3>
         <p class="muted">Один набор из 48 позиций. Выберите способ передачи и сравните результат. 👁 — посмотреть спецификацию.</p>
@@ -637,13 +649,13 @@ document.getElementById('runBig').addEventListener('click',()=>{
   document.getElementById('showTraps').style.display='none';
   const t=document.createElement('div');t.className='bub a typing';t.innerHTML='<span></span><span></span><span></span>';body.appendChild(t);
   setTimeout(()=>{t.remove();const a=document.createElement('div');a.className='bub a';
-    if(bigMode==='pdf'){a.innerHTML=`Свёл данные из PDF. Итоги: А ≈ 8 480 000 ₽, Б ≈ 6 210 000 ₽, <span class="err">В ≈ 12 100 000 ₽</span>.
-Фрагмент распознавания:
-…30 Профиль UD 240 <span class="err">177,8</span> …
-31 Подвес 800 <span class="err">1 403,00 → 1 122 400,00</span> …
+    if(bigMode==='pdf'){a.innerHTML=`Свёл данные из PDF, но при распознавании структура «поехала»:
+Фрагмент:
+…29 Профиль CD 480 — цена не распозналась —
+30 Профиль UD 240 <span class="err">793,00</span> ← цена прилипла из соседней строки
 33 <span class="err">— строка не распозналась —</span>
 34 <span class="err">— строка не распозналась —</span> …
-<div class="note red" style="margin-top:8px">Типичный сбой PDF: позиция 31 раздута ×50, позиции 33–35 «потерялись», итог по В завышен. Доверять нельзя.</div>`;}
+<div class="note red" style="margin-top:8px">Типичный сбой PDF: границы строк потерялись — значения съехали к чужим позициям, строки 33–35 «потерялись», итог не сходится. Такому разбору доверять нельзя — дайте таблицу текстом или Markdown.</div>`;}
     else{a.innerHTML=`Свёл 48 позиций. Предварительно:
 • <b>А</b> (доставка включена): ≈ <b>8,48 млн ₽</b> — полный, соответствует ТЗ
 • <b>Б</b> (УСН, без НДС): ≈ 6,21 млн ₽ — выглядит дешевле всех
